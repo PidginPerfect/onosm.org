@@ -1,3 +1,5 @@
-# onosm.org
+# OSM SocEnt Mapping
 
-An easy way to get a business on to OpenStreetMap.
+An edit of onosm.org to collect and map Social Enterprise data withing Glasgow. 
+
+Part of Future City | Open Glasgow.
