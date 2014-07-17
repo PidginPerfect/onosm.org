@@ -26,6 +26,22 @@ $("#category").select2({
     }
 });
 
+$.ajax('./status.json').success(function(data){
+    category_data = data;
+});
+
+$("#status").select2({
+    query: function (query) {
+        var data = {results: []}, i;
+        for (i = 0; i < category_data.length; i++) {
+            if (query.term.length === 0 || category_data[i].toLowerCase().indexOf(query.term.toLowerCase()) >= 0) {
+                data.results.push({id: category_data[i], text: category_data[i]});
+            }
+        }
+        query.callback(data);
+    }
+});
+
 $("#find").submit(function(e) {
     e.preventDefault();
     $("#couldnt-find").hide();
@@ -87,6 +103,7 @@ $("#collect-data-done").click(function() {
     location.hash = '#done';
 
     var note_body = "onosm.org submitted note from a business:\n" +
+        "status: " + $("#status").val() + "\n" +
         "name: " + $("#name").val() + "\n" +
         "phone: " + $("#phone").val() + "\n" +
         "website: " + $("#website").val() + "\n" +
