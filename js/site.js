@@ -10,6 +10,22 @@ findme_marker.setOpacity(0);
 
 if (location.hash) location.hash = '';
 
+$.ajax('./status.json').success(function(data){
+    category_data = data;
+});
+
+$("#status").select2({
+    query: function (query) {
+        var data = {results: []}, i;
+        for (i = 0; i < category_data.length; i++) {
+            if (query.term.length === 0 || category_data[i].toLowerCase().indexOf(query.term.toLowerCase()) >= 0) {
+                data.results.push({id: category_data[i], text: category_data[i]});
+            }
+        }
+        query.callback(data);
+    }
+});
+
 $.ajax('./categories.json').success(function(data){
     category_data = data;
 });
@@ -26,21 +42,6 @@ $("#category").select2({
     }
 });
 
-$.ajax('./status.json').success(function(data){
-    category_data = data;
-});
-
-$("#status").select2({
-    query: function (query) {
-        var data = {results: []}, i;
-        for (i = 0; i < category_data.length; i++) {
-            if (query.term.length === 0 || category_data[i].toLowerCase().indexOf(query.term.toLowerCase()) >= 0) {
-                data.results.push({id: category_data[i], text: category_data[i]});
-            }
-        }
-        query.callback(data);
-    }
-});
 
 $("#find").submit(function(e) {
     e.preventDefault();
